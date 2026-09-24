@@ -43,7 +43,7 @@ button:disabled { cursor: default; }
 }
 
 .pill {
-  min-height: 40px;
+  min-height: 44px;
   border: 1px solid var(--line);
   background: var(--face);
   border-radius: 999px;
