@@ -7,7 +7,7 @@
 // 古いキャッシュを消すときは、必ず自分の PREFIX で始まるものだけを消す。
 // keys.filter(k => k !== CACHE) のように書くと、ほかのアプリのキャッシュまで消してしまう。
 
-const PREFIX = 'pitaoshi-';
+const PREFIX = 'near-pin-';
 const VERSION = 'v1';
 const CACHE = `${PREFIX}${VERSION}`;
 const FONT_CACHE = `${PREFIX}fonts`;

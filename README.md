@@ -1,10 +1,10 @@
-# ぴたおし — 「ぴたり」と「おしい」で数を当てる
+# NEAR PIN — ぴたり・おしいで番号を当てる
 
 隠れた 3〜5 桁の数を当てる。予想すると、数字も場所も合った数「ぴたり」と、数字だけ合った数「おしい」が返ってくるので、手がかりを重ねて少ない回数でしぼり込む。
 
 ## 🔗 リンク
 
-- 遊ぶ: https://t-of.github.io/pitaoshi/
+- 遊ぶ: https://t-of.github.io/near-pin/
 - 制作: [T.OF...](https://t-of.github.io/)
 
 ## 遊び方
@@ -47,10 +47,10 @@ node test.mjs                 # 判定・答えの作り方・今日の 1 問・
 | `main.js` | 画面の切り替え・入力・描画・音 |
 | `test.mjs` | `logic.js` のテスト |
 
-- 今日の 1 問の答え: 日付の文字列（`pitaoshi:YYYY-MM-DD`）を FNV-1a でハッシュして種にし、mulberry32 の乱数で 0〜9 を混ぜて先頭 4 つ。テストでいくつかの日の答えを固定しているので、作り方を変えると落ちる（変えると同じ日の答えが人によってずれる）。
+- 今日の 1 問の答え: 日付の文字列（`near-pin:YYYY-MM-DD`）を FNV-1a でハッシュして種にし、mulberry32 の乱数で 0〜9 を混ぜて先頭 4 つ。テストでいくつかの日の答えを固定しているので、作り方を変えると落ちる（変えると同じ日の答えが人によってずれる）。
 - 保存は端末内の `localStorage`。
-  - `pitaoshi.settings`: `{ v: 1, digits, sound, seenHelp }`
-  - `pitaoshi.stats`: `{ v: 1, solo: { 3|4|5: { plays, wins, best, total } }, daily: { last, streak, maxStreak, dist: { 1〜10, more }, today } }`。`today` はその日の 1 問の続き・結果 `{ date, guesses, memo, done, gaveUp }`
-  - `pitaoshi.game`: 途中のひとりのゲーム `{ v: 1, mode: 'solo', digits, answer, guesses, memo }`。終わったら消す
+  - `near-pin.settings`: `{ v: 1, digits, sound, seenHelp }`
+  - `near-pin.stats`: `{ v: 1, solo: { 3|4|5: { plays, wins, best, total } }, daily: { last, streak, maxStreak, dist: { 1〜10, more }, today } }`。`today` はその日の 1 問の続き・結果 `{ date, guesses, memo, done, gaveUp }`
+  - `near-pin.game`: 途中のひとりのゲーム `{ v: 1, mode: 'solo', digits, answer, guesses, memo }`。終わったら消す
   - 読めない値や形のおかしい値は捨てて、はじめの値から。
 - 元は自作の試作 2 本（Processing の numberguess、Java の Suziate）。ルールだけ受け継ぎ、コードは新しく書いた。

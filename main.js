@@ -1,8 +1,8 @@
 import * as L from './logic.js';
 
 // localStorage はほかのアプリと共有される（同じ t-of.github.io のため）。
-// キーは必ず 'pitaoshi.' で始める。
-const STORE = 'pitaoshi.';
+// キーは必ず 'near-pin.' で始める。
+const STORE = 'near-pin.';
 
 function load(key, fallback) {
   try {
@@ -192,7 +192,7 @@ function begin(g) {
   else { persist(); requestAnimationFrame(scrollLog); }
 }
 
-// 途中のゲームを残す。ひとりは pitaoshi.game（終わったら消す）、今日の 1 問は記録の中（その日の結果として残る）
+// 途中のゲームを残す。ひとりは near-pin.game（終わったら消す）、今日の 1 問は記録の中（その日の結果として残る）
 function persist() {
   if (game.mode === 'solo') {
     if (game.done) remove('game');

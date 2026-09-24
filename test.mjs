@@ -6,7 +6,7 @@ let n = 0;
 const test = (name, fn) => { fn(); n++; console.log(`ok ${name}`); };
 
 // 決まった日の今日の 1 問の答え（2026-09-25・2026-09-26・2027-01-01）。変わったら、同じ日に遊ぶ人どうしで答えがずれる
-const PINNED = ['6047', '8675', '7615'];
+const PINNED = ['7963', '4765', '7061'];
 
 // ぴたり・おしいを定義どおりに数える（比べる用）
 function naive(answer, guess) {

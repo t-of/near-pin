@@ -1,4 +1,4 @@
-// ぴたおしの決まりごと。画面（DOM）に触らない部分をここに集める。
+// NEAR PINの決まりごと。画面（DOM）に触らない部分をここに集める。
 // main.js（ブラウザ）と test.mjs（node）の両方から読む。
 //
 // 数（答え・予想）は数字の文字列で持つ（例 '0385'）。先頭の 0 もよい。数字は重ならない。
@@ -6,8 +6,8 @@
 // 名前は変わるかもしれないので、画面と共有の文に出るものはここだけに書く
 // （<head>・manifest・README・sw.js・localStorage の接頭辞は別に書き換える）。
 export const APP = {
-  name: 'ぴたおし',
-  catch: '「ぴたり」と「おしい」で数を当てる',
+  name: 'NEAR PIN',
+  catch: 'ぴたり・おしいで番号を当てる',
   pitch: '「ぴたり」と「おしい」を手がかりに、隠れた数を当てる',
 };
 
@@ -74,8 +74,8 @@ export function seeded(seed) {
     return ((t ^ (t >>> 14)) >>> 0) / 2 ** 32;
   };
 }
-// 種の 'pitaoshi:' は名前が変わっても変えない。変えると同じ日でも前の版と答えが変わる（テストで決まった日の答えを確かめている）
-export const dailyAnswer = (key) => makeAnswer(DAILY_DIGITS, seeded(hash(`pitaoshi:${key}`)));
+// 種の 'near-pin:' は、この先名前が変わっても変えない。変えると同じ日でも前の版と答えが変わる（テストで決まった日の答えを確かめている）
+export const dailyAnswer = (key) => makeAnswer(DAILY_DIGITS, seeded(hash(`near-pin:${key}`)));
 
 // 今日の 1 問の共有の文（数字は出さない）
 export function dailyShareText(key, guesses, gaveUp) {
