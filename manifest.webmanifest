@@ -1,0 +1,19 @@
+{
+  "id": "./",
+  "name": "ぴたおし — 「ぴたり」と「おしい」で数を当てる",
+  "short_name": "ぴたおし",
+  "description": "隠れた 3〜5 桁の数を当てる。予想すると、数字も場所も合った数「ぴたり」と、数字だけ合った数「おしい」が返ってくるので、手がかりを重ねて少ない回数でしぼり込む。",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#141620",
+  "theme_color": "#141620",
+  "lang": "ja",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

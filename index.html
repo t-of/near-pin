@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#141620">
+  <meta name="description" content="隠れた 3〜5 桁の数を当てる。予想すると、数字も場所も合った数「ぴたり」と、数字だけ合った数「おしい」が返ってくるので、手がかりを重ねて少ない回数でしぼり込む。">
+  <title>ぴたおし — 「ぴたり」と「おしい」で数を当てる</title>
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ぴたおし">
+  <meta property="og:title" content="ぴたおし — 「ぴたり」と「おしい」で数を当てる">
+  <meta property="og:description" content="隠れた 3〜5 桁の数を当てる。予想すると、数字も場所も合った数「ぴたり」と、数字だけ合った数「おしい」が返ってくるので、手がかりを重ねて少ない回数でしぼり込む。">
+  <meta property="og:url" content="https://t-of.github.io/pitaoshi/">
+  <meta property="og:image" content="https://t-of.github.io/pitaoshi/icons/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="ja_JP">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- apple-mobile-web-app-status-bar-style は付けない（black-translucent だと iOS 26 で上部が隠れる） -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="ぴたおし">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icons/icon.svg" type="image/svg+xml">
+  <link rel="icon" type="image/png" sizes="32x32" href="./icons/favicon-32.png">
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="./webapp-kit/webapp-kit.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <!-- タイトル -->
+  <main class="screen title" id="title">
+    <header class="title__head">
+      <h1 class="title__name" data-app="name"></h1>
+      <p class="title__catch" data-app="catch"></p>
+      <div class="sample" aria-hidden="true">
+        <span class="code"><span>3</span><span>0</span><span>1</span><span>8</span></span>
+        <span class="judge"><span class="judge__cell"><b>0</b><small>ぴたり</small></span><span class="judge__cell judge__cell--oshi"><b>3</b><small>おしい</small></span></span>
+      </div>
+    </header>
+
+    <details class="howto" id="howto">
+      <summary>遊び方</summary>
+      <ol>
+        <li>0〜9 の数字を重ならないように並べた、隠れた数を当てる（0 から始まってもよい）</li>
+        <li>予想を入れると、<b class="p">ぴたり</b>（数字も場所も合っている）と<b class="o">おしい</b>（数字は入っているが場所が違う）の数が返ってくる</li>
+        <li>全部ぴたりになったら当たり。少ない回数で当てるほどよい</li>
+      </ol>
+      <p class="howto__eg">例: 答え 0385、予想 3018 → ぴたり 0・おしい 3（0・3・8 が入っているが、どれも場所が違う）</p>
+      <p class="howto__eg">「メモ」の数字をタップすると、× → ○ → 印なし と印を付けられる。判定には使わない</p>
+    </details>
+
+    <section class="card">
+      <div class="card__head"><h2 class="card__name">ひとり</h2><span class="card__sub">何度でも</span></div>
+      <div class="seg" id="digits-seg" role="radiogroup" aria-label="けた数"></div>
+      <button class="btn btn--main" id="solo-btn">はじめる</button>
+      <button class="btn" id="resume-btn" hidden>続きから</button>
+    </section>
+
+    <section class="card">
+      <div class="card__head"><h2 class="card__name">今日の 1 問</h2><span class="card__sub" id="daily-date"></span></div>
+      <p class="card__note" id="daily-note"></p>
+      <button class="btn btn--main" id="daily-btn">挑戦する</button>
+    </section>
+
+    <footer class="foot">
+      <div class="foot__actions">
+        <button class="pill" id="sound-btn" aria-pressed="true">音 オン</button>
+        <button class="pill" data-wak="install" hidden>アプリにする</button>
+        <button class="pill" data-wak="share">共有</button>
+      </div>
+      <p class="credit"><a href="/">T.OF...</a> のアプリ</p>
+    </footer>
+  </main>
+
+  <!-- 遊ぶ -->
+  <main class="screen play" id="play" hidden>
+    <header class="hud">
+      <button class="pill" id="back-btn">← タイトル</button>
+      <div class="hud__mid"><span class="hud__mode" id="mode-name"></span><span class="hud__turn" id="turn"></span></div>
+      <button class="pill hud__giveup" id="giveup-btn">あきらめる</button>
+    </header>
+
+    <div class="log" id="log">
+      <div class="log__head" aria-hidden="true"><span>回</span><span>予想</span><span>ぴたり</span><span>おしい</span></div>
+      <ol class="rows" id="rows"></ol>
+      <p class="log__empty" id="log-empty">予想を入れて「決定」</p>
+    </div>
+
+    <p class="msg" id="msg" aria-live="polite"></p>
+    <div class="slots" id="slots" aria-label="入力中の予想"></div>
+
+    <div class="memo" role="group" aria-label="メモ">
+      <span class="memo__label">メモ</span>
+      <div class="memo__chips" id="memo"></div>
+    </div>
+
+    <div class="pad" id="pad"></div>
+
+    <!-- 結果（入力の代わりに下に出す） -->
+    <section class="result" id="result" hidden>
+      <div class="result__card" role="dialog" aria-labelledby="result-title">
+        <h2 class="result__title" id="result-title"></h2>
+        <p class="result__answer"><span class="code code--big" id="result-code"></span></p>
+        <p class="result__turns" id="result-turns"></p>
+        <p class="result__badges" id="result-badge" hidden><span class="badge">自己ベスト</span></p>
+        <div class="dist" id="dist" hidden></div>
+        <button class="btn btn--main" id="again-btn">もう一度</button>
+        <div class="result__row">
+          <button class="btn" id="share-btn">共有</button>
+          <button class="btn" id="home-btn">タイトルへ</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="./webapp-kit/webapp-kit.js"></script>
+  <script type="module" src="./main.js"></script>
+</body>
+</html>
